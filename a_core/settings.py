@@ -12,9 +12,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+import dj_database_url
+
+load_dotenv()
 
 # 'dev'|'prod'
-mode = 'dev'
+mode = os.getenv('MODE','dev') 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +33,7 @@ SECRET_KEY = 'django-insecure-t=@j3za4^1@12i@h0il-uw+(zip6-)y3w@)98$vw8u0k5xtsn-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if mode=='dev' else False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -85,6 +89,10 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+LOCAL_DATABASE=True
+if mode == 'prod' or LOCAL_DATABASE:
+    DATABASES['default']=dj_database_url.parse(os.getenv('DATA_BASE_URL'))
 
 
 # Password validation
