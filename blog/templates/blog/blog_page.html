@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{blog.title}}{% endblock title %}
+
+{% block body %}
+<div class="mx-10 md:mx-52 my-5">
+
+    <div class="flex justify-center">
+        <img class=" h-[50vh] overflow-hidden" src="{{blog.get_thumbnai_url}}" alt="">
+    </div>
+    <h1 class="text-3xl capitalize">{{blog.heading}}</h1>
+    <span class="flex mt-2 mb-4 gap-1">
+        {% for tag in blog.tags.all %}
+        <div class="bg-card-100 px-3 p-1 rounded-full">
+            {{tag}}
+        </div>
+        {% endfor %}
+    </span>
+    <section>
+        {{blog.body | safe}}
+    </section>
+</div>
+
+{% endblock body %}
+
