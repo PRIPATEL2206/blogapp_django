@@ -18,7 +18,7 @@ import dj_database_url
 load_dotenv()
 
 # 'dev'|'prod'
-mode = os.getenv('MODE','dev') 
+mode = os.getenv('MODE')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,7 +32,6 @@ SECRET_KEY = 'django-insecure-t=@j3za4^1@12i@h0il-uw+(zip6-)y3w@)98$vw8u0k5xtsn-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if mode=='dev' else False
-
 ALLOWED_HOSTS = ['*']
 
 
@@ -45,7 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog'
+
+    # local apps
+    'blog.apps.BlogConfig',
+
+    # cloudinary
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -90,8 +95,8 @@ DATABASES = {
     }
 }
 
-LOCAL_DATABASE=True
-if mode == 'prod' or LOCAL_DATABASE:
+USING_POSTGRES_DATABASE=os.getenv('USING_POSTGRES_DATABASE','False') == 'True'
+if mode == 'prod' or USING_POSTGRES_DATABASE:
     DATABASES['default']=dj_database_url.parse(os.getenv('DATA_BASE_URL'))
 
 
@@ -129,16 +134,41 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR  / 'media'
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS =[
-    os.path.join(BASE_DIR, 'static'),
-    ]
+STATICFILES_DIRS =[os.path.join(BASE_DIR, 'static'),]
 STATIC_ROOT=BASE_DIR / 'staticfiles'
+
+MEDIA_URL = '/media/'
+
+IS_USING_CLOUDINARY_STORAGE=os.getenv('IS_USING_CLOUDINARY_STORAGE','False') == 'True'
+if mode == 'prod' or IS_USING_CLOUDINARY_STORAGE:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+else:
+    MEDIA_ROOT = BASE_DIR  / 'media'
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET')
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+
+# for debuging
+
+# print(f'mode : {mode}')
+# print(f'Debug : {DEBUG}')
+# print("IS_USING_CLOUDINARY_STORAGE : ",IS_USING_CLOUDINARY_STORAGE )
+# print("USING_POSTGRES_DATABASE : ",USING_POSTGRES_DATABASE )
+# print("DEFAULT_FILE_STORAGE : ",DEFAULT_FILE_STORAGE )
+# print("MEDIA_ROOT : ",MEDIA_ROOT )
+# print('CLOUDINARY_STORAGE',CLOUDINARY_STORAGE)

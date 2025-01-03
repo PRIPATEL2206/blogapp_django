@@ -11,7 +11,7 @@ class Tag(models.Model):
 class Blog(models.Model):
     title=models.CharField(max_length=50)
     heading=models.CharField(max_length=50)
-    thumbnai=models.ImageField(upload_to='blogs/',null=True,blank=True)
+    thumbnai=models.ImageField(upload_to='blogs/',blank=True)
     body=models.TextField()
     slug=models.SlugField(unique=True)
     tags=models.ManyToManyField(Tag,related_name='blogs')
