@@ -7,7 +7,7 @@
     
     {% for blog in blogs %}
     <a href="{% url "blog" slug=blog.slug %}" class=" rounded-md bg-card-200 overflow-hidden shadow-md grid grid-row-4">
-        <img class="w-[100%] h-[100%] overflow-hidden row-span-3"  src="{{blog.get_thumbnai_url}}" alt="">
+        <img class="w-[100%] h-[100%] overflow-hidden row-span-3"  src="{{blog.get_thumbnai}}" alt="">
         <div class="p-2 ">
             <h4 class="text-lg capitalize">{{blog.title}}</h4>
             <small class="flex self-end">
