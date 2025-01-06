@@ -18,9 +18,11 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.http.response import HttpResponse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('helth-check',lambda r : HttpResponse('ok') ),
     path('blogs/',include('blog.urls'))
 ]
 if settings.DEBUG:
