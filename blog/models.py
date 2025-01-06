@@ -2,7 +2,7 @@ from django.db import models
 from django.templatetags.static import static
 
 class Tag(models.Model):
-    title=models.CharField(max_length=20)
+    title=models.CharField(max_length=10)
 
     def __str__(self):
         return self.title
@@ -10,6 +10,7 @@ class Tag(models.Model):
 
 class Blog(models.Model):
     title=models.CharField(max_length=50)
+    descreption=models.TextField()
     heading=models.CharField(max_length=50)
     thumbnai=models.ImageField(upload_to='blogs/',blank=True)
     body=models.TextField()

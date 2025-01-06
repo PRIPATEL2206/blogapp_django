@@ -8,14 +8,15 @@
     <div class="flex justify-center">
         <img class=" h-[50vh] overflow-hidden" src="{{blog.get_thumbnai}}" alt="">
     </div>
-    <h1 class="text-3xl capitalize">{{blog.heading}}</h1>
-    <span class="flex mt-2 mb-4 gap-1">
+    <h5 class="my-2 text-3xl font-bold tracking-tight text-gray-900">{{blog.heading}}</h5>
+    <small class="flex self-end mb-2">
         {% for tag in blog.tags.all %}
-        <div class="bg-card-100 px-3 p-1 rounded-full">
-            {{tag}}
-        </div>
+            <span class="bg-gray-100  text-gray-800 text-xs font-medium me-2 px-2.5 py-1 rounded-full dark:bg-gray-700 dark:text-gray-300"> {{tag}}</span>
         {% endfor %}
-    </span>
+    </small>
+    <p class="mb-3 max-h-[11ch]  text-ellipsis overflow-hidden  whitespace-pre-wrap font-normal text-gray-700">{{blog.descreption}}</p>
+
+
     <section>
         {{blog.body | safe}}
     </section>

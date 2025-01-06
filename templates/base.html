@@ -1,13 +1,40 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <title>Blog | {% block title %}{% endblock title %}</title>
+    {% if debug %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        {% else %}
+        <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    {% endif %}
+        <title>Blog | {% block title %}{% endblock title %}</title>
 </head>
+
 <body>
+
+
+    {% include "navbar.html" %}
+
     {% block body %}{% endblock body %}
+
+    {% include "footer.html" %}
+
+    {% block script %}{% endblock script %}
+
+    <script>
+        document.getElementById('ham-burger').onclick = (e) => {
+            if (document.getElementById('navbar-search').classList.contains('hidden')) {
+                document.getElementById('navbar-search').classList.remove('hidden');
+            }
+            else {
+                document.getElementById('navbar-search').classList.add('hidden');
+            }
+        }
+
+    </script>
 </body>
+
 </html>
