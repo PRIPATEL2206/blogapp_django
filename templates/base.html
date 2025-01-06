@@ -10,7 +10,10 @@
         {% else %}
         <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
     {% endif %}
-        <title>Blog | {% block title %}{% endblock title %}</title>
+
+    {% block style %}{% endblock style %}
+
+    <title>Blog | {% block title %}{% endblock title %}</title>
 </head>
 
 <body>
